@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+    Options +MultiViews
+    RewriteEngine On
+    RewriteBase /blog
+
+    RewriteCond %{THE_REQUEST} views/([^\s]+) [NC]
+    RewriteRule ^ %1 [R=301,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ views/$1 [L]
+
+    RewriteCond %{THE_REQUEST} /([^.]+)\.php [NC]
+    RewriteRule ^ /%1 [NC,L,R]
+
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^ %{REQUEST_URI}.php [NC,L]
+</IfModule>
