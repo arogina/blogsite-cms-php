@@ -16,15 +16,15 @@
         <label for="username">Username</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="email" id="email" class="form-control" autofocus>
+        <input type="email" id="email" class="form-control">
         <label for="email">E-mail</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="password" id="password" class="form-control" autofocus>
+        <input type="password" id="password" class="form-control">
         <label for="password">Password</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="password" id="repeat-password" class="form-control" autofocus>
+        <input type="password" id="repeat-password" class="form-control">
         <label for="repeat-password">Repeat password</label>
     </div>
     <div class="w-100 d-flex justify-content-end">

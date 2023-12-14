@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
     Options +MultiViews
     RewriteEngine On
-    RewriteBase /blog
+    RewriteBase /blogsite-cms-php/blog
 
     RewriteCond %{THE_REQUEST} views/([^\s]+) [NC]
     RewriteRule ^ %1 [R=301,L]

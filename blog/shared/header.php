@@ -1,5 +1,5 @@
 <?php 
-  define("ROOT", "/blog");
+  define("ROOT", "/blogsite-cms-php/blog");
   session_start();
 ?>
 
