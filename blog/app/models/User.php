@@ -11,4 +11,20 @@
             $this->email = $email;
             $this->password = $password;
         }
+
+        function getId() {
+            return $this->$id;
+        }
+
+        function getUsername() {
+            return $this->$username;
+        }
+
+        function getEmail() {
+            return $this->$email;
+        }
+
+        function getPassword() {
+            return $this->$password;
+        }
     }
