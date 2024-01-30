@@ -1,6 +1,21 @@
 <?php 
   define("ROOT", "/blogsite-cms-php/blog");
+
+  spl_autoload_register(function ($class) {
+    include ROOT . "/app/models/$class.php";
+  });
+
+  spl_autoload_register(function ($class) {
+    include ROOT . "/app/config/$class.php";
+  });
+
+  spl_autoload_register(function ($class) {
+    include ROOT . "/app/services/$class.php";
+  });
+
   session_start();
+  $GLOBALS["env"] = parse_ini_file(realpath("/blogsite-cms-php/blog/app/config/config.ini"));
+
 ?>
 
 <!doctype html>

@@ -2,8 +2,7 @@
     require_once "../shared/header.php"; 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $_SESSION["msg-error"] = "ERROR MESSAGE!!";
-        $_SESSION["msg-success"] = "SUCCESS MESSAGE!!";
+        $_SESSION["msg-error"] = var_dump($_POST);
         header("Refresh:0");
     }
 ?>
