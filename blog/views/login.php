@@ -27,13 +27,13 @@
 
 <h2 class="text-center mb-5">Login</h2>
 
-<form class="w-50 mx-auto" action="" method="POST">
+<form class="w-50 mx-auto needs-validation" action="" method="POST">
     <div class="form-floating mb-3">
-        <input type="email" id="email" name="email" class="form-control" autofocus>
+        <input type="email" id="email" name="email" class="form-control" autofocus required>
         <label for="email">E-mail</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="password" id="password" name="password" class="form-control" autofocus>
+        <input type="password" id="password" name="password" class="form-control" autofocus required>
         <label for="password">Password</label>
     </div>
     <div class="w-100 d-flex justify-content-between">

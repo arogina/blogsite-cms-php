@@ -10,7 +10,7 @@
         $repeat_password = $_POST["repeat-password"] ?? "";
 
         if ($username == "" || $email == "" || $password == "" || $repeat_password == "") {
-            $_SESSION["msg-error"] = "There are some empty fields! Try again!";
+            $_SESSION["msg-error"] = "There are empty fields! Try again!";
             header("Refresh:0");
         } else if ($password != $repeat_password) {
             $_SESSION["msg-error"] = "Password and repeated password don't match!";
