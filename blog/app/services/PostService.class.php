@@ -10,13 +10,14 @@
             $data = Database::get_connection()->query(
                 "SELECT p.id, p.title, p.content, p.date, u.username as author FROM post p
                 LEFT JOIN user u on u.id = p.author
+                ORDER BY p.date desc
                 LIMIT $start_row, " . PAGE_LENGTH
             );
             Database::disconnect();
 
             while ($row = $data->fetch_object()) {
                 if ($row) {
-                    $post = new Post($row->id, $row->title, $row->content, $row->date, $row->author);
+                    $post = new Post($row->id, $row->title, $row->content, date_format(new DateTimeImmutable($row->date), "d.m.Y. H:i:s"), $row->author);
                     array_push($posts, $post);
                 } 
             }
