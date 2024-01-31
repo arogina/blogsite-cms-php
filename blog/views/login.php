@@ -1,10 +1,28 @@
 <?php 
     require_once "../shared/header.php"; 
 
+    if (isset($_SESSION["user"])) header("index.php");
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $_SESSION["msg-error"] = "ERROR MESSAGE!!";
-        $_SESSION["msg-success"] = "SUCCESS MESSAGE!!";
-        header("Refresh:0");
+        if (!isset($_POST["email"]) || $_POST["email"] == "") {
+            $_SESSION["msg-error"] = "E-mail is required! Try again!";
+            header("Refresh:0");
+            
+        } else if (!isset($_POST["password"]) || $_POST["password"] == "") {
+            $_SESSION["msg-error"] = "Password is required! Try again!";
+            header("Refresh:0");
+        } else {
+            $user = UserService::login($_POST["email"], $_POST["password"]);
+
+            if (isset($user)) {
+                $_SESSION["msg-success"] = "Succesfully logged in!";
+                $_SESSION["user"] = $user;
+                header("index.php");
+            } else {
+                $_SESSION["msg-error"] = "Error occured while trying to log in!";
+                header("Refresh:0");
+            }
+        }
     }
 ?>
 
@@ -12,15 +30,15 @@
 
 <form class="w-50 mx-auto" action="" method="POST">
     <div class="form-floating mb-3">
-        <input type="email" id="email" class="form-control" autofocus>
+        <input type="email" id="email" name="email" class="form-control" autofocus>
         <label for="email">E-mail</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="password" id="password" class="form-control" autofocus>
+        <input type="password" id="password" name="password" class="form-control" autofocus>
         <label for="password">Password</label>
     </div>
     <div class="w-100 d-flex justify-content-between">
-        <a href="<?= ROOT ?>/views/register.php">Register</a>
+        <a href="views/register.php">Register</a>
         <input type="submit" value="Login" class="btn btn-primary">
     </div>
 </form>
