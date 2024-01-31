@@ -45,12 +45,18 @@
                     <li class="nav-item">
                       <a class="nav-link" href="index.php">Home</a>
                     </li>
+                    <?php if (!isset($_SESSION["user"])) : ?>
                     <li class="nav-item">
                       <a class="nav-link" href="views/login.php">Login</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="views/register.php">Register</a>
                     </li>
+                    <?php else : ?>
+                      <li class="nav-item">
+                        <a class="nav-link" href="views/login.php">Profile</a>
+                      </li>
+                    <?php endif; ?>
                   </ul>
                   <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

@@ -27,7 +27,7 @@
             if (!$stmt->execute()) {
                 trigger_error("Error executing query: " . $stmt->error);
                 Database::disconnect();
-                return false;
+                return null;
             }
 
             $result = $stmt->get_result();
@@ -37,16 +37,14 @@
             while ($row = $result->fetch_object()) {
                 if ($row) {
                     $user = new User($row->id, $row->username, $row->email, $row->password);
-                } else {
-                    return false;
-                }
+                } 
             }
 
-            if (!isset($user)) return false;
+            if (!isset($user)) return null;
             if (password_verify($password, $user->password)) {
                 return $user;
             }
 
-            return false;
+            return null;
         }
     }

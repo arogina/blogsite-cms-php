@@ -1,6 +1,8 @@
 <?php 
     require_once "../shared/header.php"; 
 
+    if (isset($_SESSION["user"])) header("index.php");
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!isset($_POST["email"]) || $_POST["email"] == "") {
             $_SESSION["msg-error"] = "E-mail is required! Try again!";
@@ -10,11 +12,12 @@
             $_SESSION["msg-error"] = "Password is required! Try again!";
             header("Refresh:0");
         } else {
-            $success = UserService::login($_POST["email"], $_POST["password"]);
+            $user = UserService::login($_POST["email"], $_POST["password"]);
 
-            if ($success) {
+            if (isset($user)) {
                 $_SESSION["msg-success"] = "Succesfully logged in!";
-                header("Refresh:0");
+                $_SESSION["user"] = $user;
+                header("index.php");
             } else {
                 $_SESSION["msg-error"] = "Error occured while trying to log in!";
                 header("Refresh:0");
@@ -35,7 +38,7 @@
         <label for="password">Password</label>
     </div>
     <div class="w-100 d-flex justify-content-between">
-        <a href="/views/register.php">Register</a>
+        <a href="views/register.php">Register</a>
         <input type="submit" value="Login" class="btn btn-primary">
     </div>
 </form>
