@@ -56,6 +56,9 @@
                       <li class="nav-item">
                         <a class="nav-link" href="views/login.php">Profile</a>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="views/logout.php">Log out</a>
+                      </li>
                     <?php endif; ?>
                   </ul>
                   <form class="d-flex" role="search">

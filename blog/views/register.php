@@ -1,10 +1,29 @@
 <?php 
     require_once "../shared/header.php"; 
 
+    if (isset($_SESSION["user"])) header("Location: index.php");
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $_SESSION["msg-error"] = "ERROR MESSAGE!!";
-        $_SESSION["msg-success"] = "SUCCESS MESSAGE!!";
-        header("Refresh:0");
+        $username = $_POST["username"] ?? "";
+        $email = $_POST["email"] ?? "";
+        $password = $_POST["password"] ?? "";
+        $repeat_password = $_POST["repeat-password"] ?? "";
+
+        if ($username == "" || $email == "" || $password == "" || $repeat_password == "") {
+            $_SESSION["msg-error"] = "There are some empty fields! Try again!";
+            header("Refresh:0");
+        } else if ($password != $repeat_password) {
+            $_SESSION["msg-error"] = "Password and repeated password don't match!";
+            header("Refresh:0");
+        } else {
+            if (UserService::create($username, $email, $password)) {
+                $_SESSION["msg-success"] = "User succesfully registered!";
+                header("Location: views/login.php");
+            } else {
+                $_SESSION["msg-error"] = "Error occured! Try again!";
+                header("Refresh:0");
+            }
+        }
     }
 ?>
 
@@ -12,19 +31,19 @@
 
 <form class="w-50 mx-auto" action="" method="POST">
 <div class="form-floating mb-3">
-        <input type="text" id="username" class="form-control" autofocus>
+        <input type="text" id="username" name="username" class="form-control" autofocus>
         <label for="username">Username</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="email" id="email" class="form-control">
+        <input type="email" id="email" name="email" class="form-control">
         <label for="email">E-mail</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="password" id="password" class="form-control">
+        <input type="password" id="password" name="password" class="form-control">
         <label for="password">Password</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="password" id="repeat-password" class="form-control">
+        <input type="password" id="repeat-password" name="repeat-password" class="form-control">
         <label for="repeat-password">Repeat password</label>
     </div>
     <div class="w-100 d-flex justify-content-end">

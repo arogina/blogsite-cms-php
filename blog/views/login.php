@@ -1,13 +1,12 @@
 <?php 
     require_once "../shared/header.php"; 
 
-    if (isset($_SESSION["user"])) header("index.php");
-
+    if (isset($_SESSION["user"])) header("Location: index.php");
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!isset($_POST["email"]) || $_POST["email"] == "") {
             $_SESSION["msg-error"] = "E-mail is required! Try again!";
             header("Refresh:0");
-            
         } else if (!isset($_POST["password"]) || $_POST["password"] == "") {
             $_SESSION["msg-error"] = "Password is required! Try again!";
             header("Refresh:0");
@@ -17,7 +16,7 @@
             if (isset($user)) {
                 $_SESSION["msg-success"] = "Succesfully logged in!";
                 $_SESSION["user"] = $user;
-                header("index.php");
+                header("Location: index.php");
             } else {
                 $_SESSION["msg-error"] = "Error occured while trying to log in!";
                 header("Refresh:0");
