@@ -2,7 +2,7 @@
     require_once "shared/header.php";
 
     $page = 1;
-    if ($_SERVER["REQUEST_METHOD"] == "GET") { 
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
         if (isset($_GET["page"])) {
             $page = $_GET["page"];
         }
