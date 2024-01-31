@@ -1,6 +1,6 @@
 <?php
     class UserService {
-        private final function __construct() {}
+        private function __construct() {}
 
         public static function create(string $username, string $email, string $password) {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);

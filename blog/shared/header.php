@@ -34,7 +34,7 @@
   </head>
   <body class="my-3 fill-height bg-secondary">
     <main class="container bg-light w-100 pb-5">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary w-100 mb-4">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary w-100 mb-4 p-3">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/index.php">BlogSite</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
