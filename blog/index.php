@@ -1,23 +1,43 @@
 <?php 
-    require_once "shared/header.php"; 
+    require_once "shared/header.php";
 
-    $posts = PostService::get_all(1);
+    $page = 1;
+    if ($_SERVER["REQUEST_METHOD"] == "GET") { 
+        if (isset($_GET["page"])) {
+            $page = $_GET["page"];
+        }
+    }
+    
+    $posts = PostService::get_all($page);
+    $num_rows = PostService::get_num_rows();
+    $pages = ceil($num_rows / PAGE_LENGTH);
 ?>
 
 <div class="container-fluid">
-  <div class="row">
+    <h2>Latest</h2>
+    <hr>
+    <div class="row">
     <?php foreach($posts as $post): ?>
-        <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card" style="width: 18rem; height: 13rem;">
-            <div class="card-body">
-                <h5 class="card-title"><?= $post->get_title() ?></h5>
-                <p class="card-text"><?= substr($post->get_content(), 0, 70) ?>...</p>
-                <a href="#" class="card-link">Read more...</a>
+        <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-8 col-sm-12 mb-4">
+            <div class="card" style="width: 25rem; height: 13rem;">
+                <div class="card-body">
+                    <h5 class="card-title"><?= $post->get_title() ?></h5>
+                    <p class="card-text"><?= substr($post->get_content(), 0, 70) ?>...</p>
+                    <a href="#" class="card-link">Read more...</a>
+                </div>
             </div>
         </div>
-    </div>
     <?php endforeach; ?>
-  </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="index.php?page=<?php echo $page - 1 <= 0 ? 1 : $page - 1?>">Previous</a></li>
+            <?php for($i = 1; $i <= $pages; $i++): ?>
+                <li class="page-item"><a class="page-link" href="index.php?page=<?php echo $i ?>"><?= $i ?></a></li>
+            <?php endfor; ?>
+            <li class="page-item"><a class="page-link" href="index.php?page=<?php echo $page + 1 > $pages ? $pages : $page + 1 ?>">Next</a></li>
+        </ul>
+    </div>
 </div>
 
 <?php require_once "shared/footer.php"; ?>
