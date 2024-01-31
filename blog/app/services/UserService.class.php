@@ -41,7 +41,7 @@
             }
 
             if (!isset($user)) return null;
-            if (password_verify($password, $user->password)) {
+            if (password_verify($password, $user->get_password())) {
                 return $user;
             }
 

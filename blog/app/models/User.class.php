@@ -12,19 +12,19 @@
             $this->password = $password;
         }
 
-        function getId() {
-            return $this->$id;
+        function get_id() {
+            return $this->id;
         }
 
-        function getUsername() {
-            return $this->$username;
+        function get_username() {
+            return $this->username;
         }
 
-        function getEmail() {
-            return $this->$email;
+        function get_email() {
+            return $this->email;
         }
 
-        function getPassword() {
-            return $this->$password;
+        function get_password() {
+            return $this->password;
         }
     }
