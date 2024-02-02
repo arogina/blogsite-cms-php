@@ -22,9 +22,9 @@
             <div class="card" style="width: 25rem; height: 15rem;">
                 <div class="card-body">
                     <h5 class="card-title"><?= $post->get_title() ?></h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Posted: <?= $post->get_date() ?></h6>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Published: <?= $post->get_date() ?></h6>
                     <p class="card-text"><?= substr($post->get_content(), 0, 70) ?>...</p>
-                    <a href="#" class="card-link">Read more...</a>
+                    <a href="views/post.php?id=<?= $post->get_id() ?>" class="card-link">Read more...</a>
                     <h6 class="card-subtitle mt-2 text-body-secondary text-end">Author: <?= $post->get_author() ?></h6>
                 </div>
             </div>

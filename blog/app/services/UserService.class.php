@@ -27,7 +27,7 @@
             if (!$stmt->execute()) {
                 trigger_error("Error executing query: " . $stmt->error);
                 Database::disconnect();
-                return null;
+                throw new ErrorException("Database error occured!");
             }
 
             $result = $stmt->get_result();
@@ -40,11 +40,11 @@
                 } 
             }
 
-            if (!isset($user)) return null;
+            if (!isset($user)) throw new ErrorException("Invalid e-mail!");;
             if (password_verify($password, $user->get_password())) {
                 return $user;
             }
 
-            return null;
+            throw new ErrorException("Wrong password!");
         }
     }

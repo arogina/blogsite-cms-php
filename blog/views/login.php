@@ -11,14 +11,19 @@
             $_SESSION["msg-error"] = "Password is required! Try again!";
             header("Refresh:0");
         } else {
-            $user = UserService::login($_POST["email"], $_POST["password"]);
+            try {
+                $user = UserService::login($_POST["email"], $_POST["password"]);
 
-            if (isset($user)) {
-                $_SESSION["msg-success"] = "Succesfully logged in!";
-                $_SESSION["user"] = $user;
-                header("Location: index.php");
-            } else {
-                $_SESSION["msg-error"] = "Error occured while trying to log in!";
+                if (isset($user)) {
+                    $_SESSION["msg-success"] = "Succesfully logged in!";
+                    $_SESSION["user"] = $user;
+                    header("Location: index.php");
+                } else {
+                    $_SESSION["msg-error"] = "Error occured while trying to log in!";
+                    header("Refresh:0");
+                }
+            } catch (ErrorException $ex) {
+                $_SESSION["msg-error"] = $ex->getMessage();
                 header("Refresh:0");
             }
         }
