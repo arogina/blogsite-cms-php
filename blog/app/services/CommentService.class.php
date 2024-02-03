@@ -18,7 +18,7 @@
 
             Database::connect();
             $stmt = Database::get_connection()->prepare(
-                "SELECT c.id, c.post_id, u.username, c.text FROM comment c
+                "SELECT c.id, c.post_id, u.username, c.text, c.date FROM comment c
                 LEFT JOIN user u ON u.id = c.user_id
                 WHERE c.post_id = ? AND ISNULL(c.parent_id) = 1
                 LIMIT $start_row, " . COMMENTS_PAGE_LENGTH
@@ -41,7 +41,7 @@
                         $row->post_id, 
                         $row->username, 
                         $row->text, 
-                        null
+                        date_format(new DateTimeImmutable($row->date), "d.m.Y. H:i:s")
                     );
                     array_push($comments, $comment);
                 } 
@@ -55,7 +55,7 @@
 
             Database::connect();
             $stmt = Database::get_connection()->prepare(
-                "SELECT c.id, c.post_id, u.username, c.text FROM comment c
+                "SELECT c.id, c.post_id, u.username, c.text, c.date FROM comment c
                 LEFT JOIN user u ON u.id = c.user_id
                 WHERE c.post_id = ? AND c.parent_id = ?"
             );
@@ -77,12 +77,27 @@
                         $row->post_id, 
                         $row->username, 
                         $row->text, 
-                        null
+                        date_format(new DateTimeImmutable($row->date), "d.m.Y. H:i:s")
                     );
                     array_push($replies, $reply);
                 } 
             }
 
             return $replies;
+        }
+
+        public static function create_comment(int $user_id, int $post_id, string $text) {
+            Database::connect();
+            $stmt = Database::get_connection()->prepare("INSERT INTO comment (post_id, user_id, text) VALUES (?,?,?)");
+            $stmt->bind_param("iis", $post_id, $user_id, $text);
+
+            if (!$stmt->execute()) {
+                trigger_error("Error executing query: " . $stmt->error);
+                Database::disconnect();
+                return false;
+            }
+
+            Database::disconnect();
+            return true;
         }
     }
