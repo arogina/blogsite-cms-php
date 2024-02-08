@@ -41,7 +41,8 @@
                         $row->post_id, 
                         $row->username, 
                         $row->text, 
-                        date_format(new DateTimeImmutable($row->date), "d.m.Y. H:i:s")
+                        date_format(new DateTimeImmutable($row->date), "d.m.Y. H:i:s"),
+                        ""
                     );
                     array_push($comments, $comment);
                 } 
@@ -55,8 +56,10 @@
 
             Database::connect();
             $stmt = Database::get_connection()->prepare(
-                "SELECT c.id, c.post_id, u.username, c.text, c.date FROM comment c
+                "SELECT c.id, c.post_id, u.username, c.text, c.date, pu.username as parent_username FROM comment c
                 LEFT JOIN user u ON u.id = c.user_id
+                LEFT JOIN comment r ON r.id = c.parent_id
+                LEFT JOIN user pu ON pu.id = r.user_id
                 WHERE c.post_id = ? AND c.parent_id = ?"
             );
 
@@ -77,7 +80,8 @@
                         $row->post_id, 
                         $row->username, 
                         $row->text, 
-                        date_format(new DateTimeImmutable($row->date), "d.m.Y. H:i:s")
+                        date_format(new DateTimeImmutable($row->date), "d.m.Y. H:i:s"),
+                        $row->parent_username
                     );
                     array_push($replies, $reply);
                 } 
@@ -86,10 +90,11 @@
             return $replies;
         }
 
-        public static function create_comment(int $user_id, int $post_id, string $text) {
+        public static function create_comment(int $user_id, int $post_id, string $text, int $parent_id) {
             Database::connect();
-            $stmt = Database::get_connection()->prepare("INSERT INTO comment (post_id, user_id, text) VALUES (?,?,?)");
-            $stmt->bind_param("iis", $post_id, $user_id, $text);
+            $stmt = Database::get_connection()->prepare(
+                "INSERT INTO comment (post_id, user_id, text, parent_id) VALUES (?,?,?,?)");
+            $stmt->bind_param("iisi", $post_id, $user_id, $text, $parent_id);
 
             if (!$stmt->execute()) {
                 trigger_error("Error executing query: " . $stmt->error);
